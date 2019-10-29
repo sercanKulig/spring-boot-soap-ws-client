@@ -1,0 +1,56 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.example/springbootsoapws/api/userWs" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example/springbootsoapws/api/userWs" targetNamespace="http://www.example/springbootsoapws/api/userWs">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example/springbootsoapws/api/userWs">
+            <xsd:element name="userRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="userResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="user" type="tns:user"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="user">
+                <xsd:sequence>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="age" type="xsd:int"/>
+                    <xsd:element maxOccurs="unbounded" name="style" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="userRequest">
+        <wsdl:part element="tns:userRequest" name="userRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="userResponse">
+        <wsdl:part element="tns:userResponse" name="userResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="user">
+        <wsdl:operation name="user">
+            <wsdl:input message="tns:userRequest" name="userRequest"> </wsdl:input>
+            <wsdl:output message="tns:userResponse" name="userResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="userSoap11" type="tns:user">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="user">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="userRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="userResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="userService">
+        <wsdl:port binding="tns:userSoap11" name="userSoap11">
+            <soap:address location="http://localhost:8080/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
